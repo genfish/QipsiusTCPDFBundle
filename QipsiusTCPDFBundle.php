@@ -12,7 +12,7 @@ class QipsiusTCPDFBundle extends Bundle
      * Ran on bundle boot, our TCPDF configuration constants
      * get defined here if required
      */
-    public function boot()
+    public function boot(): void
     {
         if (!$this->container->hasParameter('qipsius_tcpdf.tcpdf')) {
             return;

@@ -9,11 +9,15 @@
         {
             "name": "Rich Sage",
             "email": "rich.sage@gmail.com"
+        },
+        {
+            "name": "David Navarro",
+            "email": "info@qipsius.com"
         }
     ],
     "require": {
-        "php": ">=7.1",
-        "symfony/framework-bundle": ">=3.4",
+        "php": ">=8.1",
+        "symfony/framework-bundle": ">=6.1",
         "tecnickcom/tcpdf": "*"
     },
     "autoload": {

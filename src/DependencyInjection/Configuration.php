@@ -1,27 +1,22 @@
 <?php
 
-namespace Qipsius\TCPDFBundle\DependencyInjection;
+namespace Qipsius\TCPDFBundle\src\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 class Configuration implements ConfigurationInterface
 {
     /**
-     * Builds our configuration
-     *
-     * @return TreeBuilder
+     * Builds our configuration.
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('qipsius_tcpdf');
+        $name = 'qipsius_tcpdf';
 
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            $rootNode = $treeBuilder->root('qipsius_tcpdf');
-        }
+        $treeBuilder = new TreeBuilder($name);
+        $rootNode    = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
@@ -35,11 +30,6 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * Adds the core TCPDF configuration
-     *
-     * @param $rootNode
-     */
     protected function addTCPDFConfig(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
@@ -59,7 +49,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('k_blank_image')->defaultValue('%kernel.project_dir%/vendor/tecnickcom/tcpdf/examples/images/_blank.png')->end()
                         ->scalarNode('k_cell_height_ratio')->defaultValue(1.25)->end()
                         ->scalarNode('k_title_magnification')->defaultValue(1.3)->end()
-                        ->scalarNode('k_small_ratio')->defaultValue(2/3)->end()
+                        ->scalarNode('k_small_ratio')->defaultValue(2 / 3)->end()
                         ->scalarNode('k_thai_topchars')->defaultTrue()->end()
                         ->scalarNode('k_tcpdf_calls_in_html')->defaultFalse()->end()
                         ->scalarNode('k_tcpdf_external_config')->defaultTrue()->end()

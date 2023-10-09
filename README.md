@@ -2,7 +2,9 @@ QipsiusTCPDFBundle
 =======================
 
 This bundle is a fork of [WhiteOctoberTCPDFBundle](https://github.com/whiteoctober/WhiteOctoberTCPDFBundle)
-This bundle facilitates easy use of the TCPDF PDF generation library in Symfony >= 4.0 applications.
+This bundle facilitates easy use of the TCPDF PDF generation library in Symfony >= 6.0 applications.
+
+For Symfony versions older than 6 use the 2.0 branch
 
 Installation
 ------------
@@ -26,45 +28,15 @@ composer show tecnickcom/tcpdf
 ```
 
 And amend your project's `composer.json` to add a TCPDF version constraint in the `requires` section.
-For example, if TCPDF version `6.2.17` was installed, `"tecnickcom/tcpdf": "^6.2.17"` will allow anything < 7 when upgrading. 
+For example, if TCPDF version `6.6.5` was installed, `"tecnickcom/tcpdf": "^6.6.5"` will allow anything < 7 when upgrading. 
 
-### Step 2: Enable the bundle in the kernel
-
-Add the bundle to the `registerBundles()` method in your kernel:
-
-In Symfony < 4:
-
-``` php
-// app/AppKernel.php
-<?php
-
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new Qipsius\TCPDFBundle\QipsiusTCPDFBundle(),
-    );
-}
-```
-
-In Symfony 4:
-
-```php
-// config/bundles.php
-return [
-    // ...
-    Qipsius\TCPDFBundle\QipsiusTCPDFBundle::class => ['all' => true],
-    // ...
-];
-```
-
-(This project is not yet configured with Symfony Flex, so this change to `config/bundles.php` won't be done automatically.)
+### Step 2: Enable autowiring
 
 If you want to do service autowiring, you'll need to add an alias for the service:
 
 ```yaml
-# app/config/services.yml (Symfony 3)
-# config/services.yaml (Symfony 4)
+# config/services.yaml
+
 services:
     # ...
 
@@ -104,8 +76,8 @@ Configuration
 You can pass parameters to TCPDF like this:
 
 ```yaml
-# app/config/config.yml (Symfony < 4)
-# config/packages/qipsius_tcpdf.yaml (Symfony 4)
+# config/packages/qipsius_tcpdf.yaml
+
 qipsius_tcpdf:
     tcpdf:
         k_title_magnification: 2
@@ -117,6 +89,8 @@ You can see the default parameter values in
 If you want, you can use TCPDF's own defaults instead:
 
 ```yaml
+# config/packages/qipsius_tcpdf.yaml
+
 qipsius_tcpdf:
     tcpdf:
         k_tcpdf_external_config: false  # the values set by this bundle will be ignored 
@@ -128,10 +102,11 @@ If you want to use your own custom TCPDF-based class, you can use
 the `class` parameter in your configuration:
 
 ```yaml
-# app/config/config.yml (Symfony < 4)
-# config/packages/qipsius_tcpdf.yaml (Symfony 4)
+# config/packages/qipsius_tcpdf.yaml
+
 qipsius_tcpdf:
-    class: 'Acme\MyBundle\MyTCPDFClass'
+    file: '%kernel.project_dir%/src/Document/PDF/Services/TCPDFService.php'
+    class: '\App\Document\PDF\Services\TCPDFService'
 ```
 
 The class must extend from the `TCPDF` class; an exception will be

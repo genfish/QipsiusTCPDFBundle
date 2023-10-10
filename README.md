@@ -30,7 +30,14 @@ composer show tecnickcom/tcpdf
 And amend your project's `composer.json` to add a TCPDF version constraint in the `requires` section.
 For example, if TCPDF version `6.6.5` was installed, `"tecnickcom/tcpdf": "^6.6.5"` will allow anything < 7 when upgrading. 
 
-### Step 2: Enable autowiring
+### Step 2: Enable the bundle in the kernel
+
+Add the bundle to the `registerBundles()` method in your kernel:
+### Step 2: Enable the bundle in the kernel
+
+Add the bundle to the `registerBundles()` method in your kernel:
+
+(This project is not yet configured with Symfony Flex, so this change to `config/bundles.php` won't be done automatically.)
 
 If you want to do service autowiring, you'll need to add an alias for the service:
 
@@ -105,8 +112,7 @@ the `class` parameter in your configuration:
 # config/packages/qipsius_tcpdf.yaml
 
 qipsius_tcpdf:
-    file: '%kernel.project_dir%/src/Document/PDF/Services/TCPDFService.php'
-    class: '\App\Document\PDF\Services\TCPDFService'
+    class: '\App\Services\TCPDFService'
 ```
 
 The class must extend from the `TCPDF` class; an exception will be

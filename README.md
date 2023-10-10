@@ -33,9 +33,15 @@ For example, if TCPDF version `6.6.5` was installed, `"tecnickcom/tcpdf": "^6.6.
 ### Step 2: Enable the bundle in the kernel
 
 Add the bundle to the `registerBundles()` method in your kernel:
-### Step 2: Enable the bundle in the kernel
 
-Add the bundle to the `registerBundles()` method in your kernel:
+```php
+// config/bundles.php
+return [
+    // ...
+    Qipsius\TCPDFBundle\QipsiusTCPDFBundle::class => ['all' => true],
+    // ...
+];
+```
 
 (This project is not yet configured with Symfony Flex, so this change to `config/bundles.php` won't be done automatically.)
 

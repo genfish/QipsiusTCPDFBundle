@@ -1,6 +1,6 @@
 <?php
 
-namespace Qipsius\TCPDFBundle\src\DependencyInjection;
+namespace Qipsius\TCPDFBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -13,9 +13,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $name = 'qipsius_tcpdf';
-
-        $treeBuilder = new TreeBuilder($name);
+        $treeBuilder = new TreeBuilder( 'qipsius_tcpdf');
         $rootNode    = $treeBuilder->getRootNode();
 
         $rootNode

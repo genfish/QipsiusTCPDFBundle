@@ -1,16 +1,27 @@
 <?php
 
-namespace Qipsius\TCPDFBundle\src;
+namespace Qipsius\TCPDFBundle;
 
+use Qipsius\TCPDFBundle\DependencyInjection\QipsiusTCPDFExtension;
 use RuntimeException;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class QipsiusTCPDFBundle extends AbstractBundle
 {
+    public function getPath(): string
+    {
+        return dirname(__DIR__);
+    }
+
+    public function getContainerExtension(): ?ExtensionInterface
+    {
+        return new QipsiusTCPDFExtension();
+    }
+
     /**
-     * Ran on bundle boot, our TCPDF configuration constants
-     * get defined here if required.
+     * Ran on bundle boot, our TCPDF configuration constants get defined here if required.
      */
     public function boot(): void
     {
@@ -33,7 +44,7 @@ class QipsiusTCPDFBundle extends AbstractBundle
                     // All K_ constants are required
                     if (0 === stripos($k, 'k_')) {
                         if (('k_path_cache' === $k || 'k_path_url_cache' === $k) && !is_dir($value)) {
-                            $this->createDir($value);
+                            $this->createDirectory($value);
                         }
 
                         if (in_array($constKey, [
@@ -54,11 +65,9 @@ class QipsiusTCPDFBundle extends AbstractBundle
     }
 
     /**
-     * Create a directory.
-     *
      * @throws RuntimeException
      */
-    private function createDir(string $filePath): void
+    private function createDirectory(string $filePath): void
     {
         $filesystem = new Filesystem();
         if (false === $filesystem->mkdir($filePath)) {

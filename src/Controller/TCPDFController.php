@@ -1,8 +1,9 @@
 <?php
 
-namespace Qipsius\TCPDFBundle\src\Controller;
+namespace Qipsius\TCPDFBundle\Controller;
 
 use LogicException;
+use ReflectionClass;
 use ReflectionException;
 use TCPDF;
 
@@ -27,10 +28,9 @@ class TCPDFController
      *
      * @throws ReflectionException
      */
-    public function create(): \TCPDF
+    public function create(): TCPDF
     {
-        $rc = new \ReflectionClass($this->className);
-
+        $rc = new ReflectionClass($this->className);
         return $rc->newInstanceArgs(func_get_args());
     }
 
@@ -42,7 +42,7 @@ class TCPDFController
      */
     public function setClassName(string $className): void
     {
-        $rc = new \ReflectionClass($className);
+        $rc = new ReflectionClass($className);
         if (!$rc->isSubclassOf('TCPDF') && 'TCPDF' !== $rc->getName()) {
             throw new LogicException("Class '{$className}' must inherit from TCPDF");
         }
